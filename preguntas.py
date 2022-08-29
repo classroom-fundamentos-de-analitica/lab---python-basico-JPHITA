@@ -12,6 +12,10 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
+datos = open("data.csv").readlines()
+
+datos = list( map(lambda fila: fila.split("\t"), datos) )
+
 
 def pregunta_01():
     """
@@ -21,7 +25,12 @@ def pregunta_01():
     214
 
     """
-    return
+
+    suma = 0
+    for fila in datos:
+        suma += int(fila[1])
+
+    return suma
 
 
 def pregunta_02():
@@ -39,7 +48,19 @@ def pregunta_02():
     ]
 
     """
-    return
+
+    r = {}
+    for row in datos:
+        if row[0] not in r.keys():
+            r[row[0]] = 1
+        else:
+            r[row[0]] += 1
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    return r
 
 
 def pregunta_03():
@@ -57,7 +78,20 @@ def pregunta_03():
     ]
 
     """
-    return
+
+    r = {}
+
+    for row in datos:
+        if row[0] not in r.keys():
+            r[row[0]] = int(row[1])
+        else:
+            r[row[0]] += int(row[1])
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    return r
 
 
 def pregunta_04():
