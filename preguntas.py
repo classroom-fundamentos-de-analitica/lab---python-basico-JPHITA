@@ -239,6 +239,8 @@ def pregunta_07():
 
     r.sort(key=lambda x: x[0])
 
+    r = list( map(lambda row: (int(row[0]), row[1]), r) )
+
     return r
 
 
