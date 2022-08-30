@@ -80,7 +80,6 @@ def pregunta_03():
     """
 
     r = {}
-
     for row in datos:
         if row[0] not in r.keys():
             r[row[0]] = int(row[1])
@@ -116,7 +115,20 @@ def pregunta_04():
     ]
 
     """
-    return
+
+    r = {}
+    for row in datos:
+        mes = row[2].split("-")[1]
+        if mes not in r.keys():
+            r[mes] = 1
+        else:
+            r[mes] += 1
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    return r
 
 
 def pregunta_05():
@@ -134,7 +146,21 @@ def pregunta_05():
     ]
 
     """
-    return
+
+    r = {}
+    for row in datos:
+        if row[0] not in r.keys():
+            r[row[0]] = [int(row[1])]
+        else:
+            r[row[0]] += [int(row[1])]
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    r = list( map(lambda row: (row[0], max(row[1]), min(row[1])), r) )
+
+    return r
 
 
 def pregunta_06():
@@ -159,7 +185,25 @@ def pregunta_06():
     ]
 
     """
-    return
+    valores = []
+    for row in datos:
+        for e in row[4].split(","):
+            valores.append(e.split(":"))
+
+    r = {}
+    for row in valores:
+        if row[0] not in r.keys():
+            r[row[0]] = [int(row[1])]
+        else:
+            r[row[0]] += [int(row[1])]
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    r = list( map(lambda row: (row[0], min(row[1]), max(row[1])), r) )
+
+    return r
 
 
 def pregunta_07():
@@ -183,7 +227,19 @@ def pregunta_07():
     ]
 
     """
-    return
+
+    r = {}
+    for row in datos:
+        if row[1] not in r.keys():
+            r[row[1]] = [row[0]]
+        else:
+            r[row[1]] += [row[0]]
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    return r
 
 
 def pregunta_08():
