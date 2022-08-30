@@ -266,7 +266,7 @@ def pregunta_08():
     ]
 
     """
-    return list( map(lambda row: ( row[0], list(set(sorted(row[1]))) ), pregunta_07()) )
+    return list( map(lambda row: ( row[0], sorted(list(set(row[1]))) ), pregunta_07()) )
 
 
 def pregunta_09():
@@ -290,21 +290,27 @@ def pregunta_09():
 
     """
 
+    r = {
+        "aaa": 0,
+        "bbb": 0,
+        "ccc": 0,
+        "ddd": 0,
+        "eee": 0,
+        "fff": 0,
+        "ggg": 0,
+        "hhh": 0,
+        "iii": 0,
+        "jjj": 0,
+    }
+
+
     valores = []
     for row in datos:
         for e in row[4].split(","):
             valores.append(e.split(":"))
 
-    r = {}
     for row in valores:
-        if row[0] not in r.keys():
-            r[row[0]] = 1
-        else:
-            r[row[0]] += 1
-
-    r = list(zip(r.keys(), r.values()))
-
-    r.sort(key=lambda x: x[0])
+        r[row[0]] += 1
 
     return r
 
