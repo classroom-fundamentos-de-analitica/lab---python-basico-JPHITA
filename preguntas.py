@@ -12,6 +12,10 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
+datos = open("data.csv").readlines()
+
+datos = list( map(lambda fila: fila.split("\t"), datos) )
+
 
 def pregunta_01():
     """
@@ -21,7 +25,12 @@ def pregunta_01():
     214
 
     """
-    return
+
+    suma = 0
+    for fila in datos:
+        suma += int(fila[1])
+
+    return suma
 
 
 def pregunta_02():
@@ -39,7 +48,19 @@ def pregunta_02():
     ]
 
     """
-    return
+
+    r = {}
+    for row in datos:
+        if row[0] not in r.keys():
+            r[row[0]] = 1
+        else:
+            r[row[0]] += 1
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    return r
 
 
 def pregunta_03():
@@ -57,7 +78,19 @@ def pregunta_03():
     ]
 
     """
-    return
+
+    r = {}
+    for row in datos:
+        if row[0] not in r.keys():
+            r[row[0]] = int(row[1])
+        else:
+            r[row[0]] += int(row[1])
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    return r
 
 
 def pregunta_04():
@@ -82,7 +115,20 @@ def pregunta_04():
     ]
 
     """
-    return
+
+    r = {}
+    for row in datos:
+        mes = row[2].split("-")[1]
+        if mes not in r.keys():
+            r[mes] = 1
+        else:
+            r[mes] += 1
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    return r
 
 
 def pregunta_05():
@@ -100,7 +146,21 @@ def pregunta_05():
     ]
 
     """
-    return
+
+    r = {}
+    for row in datos:
+        if row[0] not in r.keys():
+            r[row[0]] = [int(row[1])]
+        else:
+            r[row[0]] += [int(row[1])]
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    r = list( map(lambda row: (row[0], max(row[1]), min(row[1])), r) )
+
+    return r
 
 
 def pregunta_06():
@@ -125,7 +185,25 @@ def pregunta_06():
     ]
 
     """
-    return
+    valores = []
+    for row in datos:
+        for e in row[4].split(","):
+            valores.append(e.split(":"))
+
+    r = {}
+    for row in valores:
+        if row[0] not in r.keys():
+            r[row[0]] = [int(row[1])]
+        else:
+            r[row[0]] += [int(row[1])]
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    r = list( map(lambda row: (row[0], min(row[1]), max(row[1])), r) )
+
+    return r
 
 
 def pregunta_07():
@@ -149,7 +227,21 @@ def pregunta_07():
     ]
 
     """
-    return
+
+    r = {}
+    for row in datos:
+        if row[1] not in r.keys():
+            r[row[1]] = [row[0]]
+        else:
+            r[row[1]] += [row[0]]
+
+    r = list(zip(r.keys(), r.values()))
+
+    r.sort(key=lambda x: x[0])
+
+    r = list( map(lambda row: (int(row[0]), row[1]), r) )
+
+    return r
 
 
 def pregunta_08():
@@ -174,7 +266,7 @@ def pregunta_08():
     ]
 
     """
-    return
+    return list( map(lambda row: ( row[0], sorted(list(set(row[1]))) ), pregunta_07()) )
 
 
 def pregunta_09():
@@ -197,7 +289,30 @@ def pregunta_09():
     }
 
     """
-    return
+
+    r = {
+        "aaa": 0,
+        "bbb": 0,
+        "ccc": 0,
+        "ddd": 0,
+        "eee": 0,
+        "fff": 0,
+        "ggg": 0,
+        "hhh": 0,
+        "iii": 0,
+        "jjj": 0,
+    }
+
+
+    valores = []
+    for row in datos:
+        for e in row[4].split(","):
+            valores.append(e.split(":"))
+
+    for row in valores:
+        r[row[0]] += 1
+
+    return r
 
 
 def pregunta_10():
@@ -218,7 +333,8 @@ def pregunta_10():
 
 
     """
-    return
+
+    return [(row[0], len(row[3].split(",")), len(row[4].split(","))) for row in datos]
 
 
 def pregunta_11():
@@ -239,7 +355,22 @@ def pregunta_11():
 
 
     """
-    return
+    r = {
+        "a": 0,
+        "b": 0,
+        "c": 0,
+        "d": 0,
+        "e": 0,
+        "f": 0,
+        "g": 0
+    }
+
+    for row in datos:
+        for key in r.keys():
+            if key in row[3]:
+                r[key] += int(row[1])
+
+    return r
 
 
 def pregunta_12():
@@ -257,4 +388,21 @@ def pregunta_12():
     }
 
     """
-    return
+
+    from re import split
+    r = {
+        'A': 0,
+        'B': 0,
+        'C': 0,
+        'D': 0,
+        'E': 0
+    }
+
+    for row in datos:
+
+        nums = split(r",*\w+:", row[4])
+        nums = sum(map(int, nums[1:]))
+
+        r[row[0]] += nums
+
+    return r
